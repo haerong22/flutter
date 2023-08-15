@@ -23,6 +23,7 @@ class Body extends StatelessWidget {
         TestRadioButton(),
         TestSlider(),
         TestSwitch(),
+        TestPopupMenu(),
       ],
     );
   }
@@ -173,6 +174,41 @@ class _TestSwitchState extends State<TestSwitch> {
           value: value,
           onChanged: (newValue) => setState(() => value = newValue),
         )
+      ],
+    );
+  }
+}
+
+class TestPopupMenu extends StatefulWidget {
+  const TestPopupMenu({super.key});
+
+  @override
+  State<TestPopupMenu> createState() => _TestPopupMenuState();
+}
+
+enum TestPopupValue {
+  test1,
+  test2,
+  test3;
+}
+
+class _TestPopupMenuState extends State<TestPopupMenu> {
+  TestRadioValue selectValue = TestRadioValue.test1;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(selectValue.name),
+        PopupMenuButton(
+          itemBuilder: (context) {
+            return TestRadioValue.values
+                .map((value) =>
+                    PopupMenuItem(value: value, child: Text(value.name)))
+                .toList();
+          },
+          onSelected: (newValue) => setState(() => selectValue = newValue),
+        ),
       ],
     );
   }
